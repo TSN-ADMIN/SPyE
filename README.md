@@ -1,4 +1,4 @@
-# SPyE - Scintilla/Python based Editor
+# SPyE - *S*cintilla/*Py*thon based *E*ditor
 Yet another source code editor.
 
 Developed in [Python](https://www.python.org) and:
