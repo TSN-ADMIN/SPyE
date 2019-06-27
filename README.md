@@ -13,4 +13,4 @@ Developed in [Python](https://www.python.org) and:
 
 <br/>
 
-<img src="./SPyE.jpg" width="">
+<img src="./SPyE.jpg" width="" alt="GPL should be MIT...">
