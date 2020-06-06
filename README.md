@@ -7,7 +7,7 @@ Developed in [Python](https://www.python.org) and:
 
 #### *More coming soon ...*
 
-[comment]: ![](./SPyE.jpg)
+[comment]: ![](./SPyE.png)
 
 [comment]: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
