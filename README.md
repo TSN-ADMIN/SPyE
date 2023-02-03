@@ -1,5 +1,5 @@
 # SPyE - [S]cintilla/[Py]thon based [E]ditor
-Yet another source code editor.
+Yet another source code editor. View the [ScreenCast][https://github.com/TSN-ADMIN/SPyE/blob/master/SPyE-ScreenCast.7z] if you dare ;-)
 
 Developed in [Python](https://www.python.org) and:
 - [Scintilla](https://www.scintilla.org) source code editing component by [Neil Hodgson et al](https://en.wikipedia.org/wiki/Scintilla_(software))
