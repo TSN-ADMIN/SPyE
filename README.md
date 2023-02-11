@@ -14,3 +14,8 @@ Developed in [Python](https://www.python.org) and:
 <br/>
 
 <img src="./SPyE.png" width="" alt="GPL should be MIT...">
+
+<br/>
+
+<img src="./IMG_4023 - Glenveagh NP, Eire.jpg" width="">
+
