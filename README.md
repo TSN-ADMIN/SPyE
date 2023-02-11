@@ -1,4 +1,8 @@
 # SPyE - [S]cintilla/[Py]thon based [E]ditor
+[comment]: <br/>
+
+<img src="./SPyE.png" width="" alt="GPL should be MIT...">
+
 Yet another source code editor. Download and view the [ScreenCast](https://github.com/TSN-ADMIN/SPyE/blob/master/SPyE-ScreenCast.7z) if you dare ;-)
 
 Developed in [Python](https://www.python.org) and:
@@ -10,10 +14,6 @@ Developed in [Python](https://www.python.org) and:
 [comment]: ![](./SPyE.png)
 
 [comment]: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-<br/>
-
-<img src="./SPyE.png" width="" alt="GPL should be MIT...">
 
 <br/>
 
