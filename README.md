@@ -11,7 +11,7 @@ Developed in [Python](https://www.python.org) and:
 
 #### *enjoy 1st beta release code*
 
-[comment]: ![](./SPyE.png)
+[comment]: ![](./splash_wide_rgba.png)
 
 [comment]: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
