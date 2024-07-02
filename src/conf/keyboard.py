@@ -1,0 +1,305 @@
+#!/usr/bin/python
+
+from pathlib import Path
+
+from extern.configobj import ConfigObj
+from extern.configobj.validate import Validator
+
+from const.common import TXT_NIL
+from .debug import DBG, me_
+
+
+class Keyboard(ConfigObj):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+#TODO, use configspec and validate it against a Validator object
+        self.vld = Validator()  # not used
+
+        if not Path(self.filename).is_file():
+            self.create()
+
+        self.load()
+
+    def default(self):
+        DBG('KBD', f'{me_()}\n  File = {self.filename}\n')
+
+        sec = 'Keyboard'
+        self[sec] = {}
+        self[sec]['FIL_NEW'] = 'Ctrl+N'
+        self[sec]['FIL_OPN'] = 'Ctrl+O'
+        self[sec]['FIL_QOP'] = 'Ctrl+Q'
+        self[sec]['FIL_RCF'] = 'Ctrl+Shift+T'
+        self[sec]['FIL_RCA'] = ''
+        self[sec]['FIL_CLI'] = ''
+        self[sec]['FIL_SAV'] = 'Ctrl+S'
+        self[sec]['FIL_SAS'] = 'Ctrl+Shift+S'
+        self[sec]['FIL_SVA'] = ''
+        self[sec]['FIL_REN'] = ''
+        self[sec]['FIL_RVS'] = ''
+        self[sec]['FIL_CHD'] = ''
+        self[sec]['FIL_CFD'] = ''
+        self[sec]['FIL_INS'] = ''
+        self[sec]['FIL_APD'] = ''
+        self[sec]['FIL_WBL'] = ''
+        self[sec]['FIL_NWN'] = ''
+        self[sec]['FIL_CWN'] = ''
+        self[sec]['FIL_CLS'] = 'Ctrl+W'
+        self[sec]['FIL_CLA'] = 'Ctrl+Shift+F4'
+        self[sec]['FIL_CAE'] = 'Ctrl+Alt+Shift+F4'
+        self[sec]['FIL_XIT'] = 'Alt+X'
+        self[sec]['EDT_UDO'] = 'Ctrl+Z'
+        self[sec]['EDT_RDO'] = 'Ctrl+Shift+Z'
+        self[sec]['EDT_CUT'] = 'Ctrl+X'
+        self[sec]['EDT_CPY'] = 'Ctrl+C'
+        self[sec]['EDT_PST'] = 'Ctrl+V'
+        self[sec]['EDT_DEL'] = ''
+        self[sec]['EDT_CPF'] = ''
+        self[sec]['CRT_TOP'] = 'Ctrl+Alt+Shift+T'
+        self[sec]['CRT_CTR'] = 'Ctrl+Alt+Shift+C'
+        self[sec]['CRT_BOT'] = 'Ctrl+Alt+Shift+B'
+        self[sec]['PAR_NXT'] = 'Alt+Shift+Down'
+        self[sec]['PAR_PRV'] = 'Alt+Shift+Up'
+        self[sec]['EDT_DPL'] = 'Ctrl+Shift+D'
+        self[sec]['EDT_TPL'] = 'Ctrl+T'
+        self[sec]['LIN_TOP'] = 'Ctrl+Alt+T'
+        self[sec]['LIN_CTR'] = 'Ctrl+Alt+C'
+        self[sec]['LIN_BOT'] = 'Ctrl+Alt+B'
+        self[sec]['LIN_SLD'] = 'Ctrl+Shift+Down'
+        self[sec]['LIN_SLU'] = 'Ctrl+Shift+Up'
+        self[sec]['EDT_COL'] = ''
+        self[sec]['EDT_CTP'] = 'Ctrl+Alt+Space'
+        self[sec]['EDT_ACP'] = 'Ctrl+Space'
+        self[sec]['EDT_XWD'] = 'Alt+\\'
+        self[sec]['SRT_LIN'] = 'Shift+F2'
+        self[sec]['SRT_REV'] = 'Ctrl+Shift+F2'
+        self[sec]['SRT_UNQ'] = 'Alt+F2'
+        self[sec]['EDT_SUM'] = 'Ctrl+F2'
+        self[sec]['SEL_SPL'] = 'Ctrl+Shift+L'
+        self[sec]['SEL_APL'] = 'Ctrl+Alt+Up'
+        self[sec]['SEL_ANL'] = 'Ctrl+Alt+Down'
+        self[sec]['SEL_SGL'] = 'Escape'
+        self[sec]['SEL_INV'] = ''
+        self[sec]['SEL_ALL'] = 'Ctrl+A'
+        self[sec]['SEL_WRD'] = 'Ctrl+D'
+        self[sec]['SEL_LIN'] = 'Ctrl+L'
+        self[sec]['SEL_PAR'] = 'Ctrl+Shift+G'
+        self[sec]['SEL_BRC'] = 'Ctrl+Shift+M'
+        self[sec]['SEL_IND'] = 'Ctrl+Shift+J'
+        self[sec]['SEL_SWP'] = ''
+        self[sec]['SCH_FND'] = 'Ctrl+F'
+        self[sec]['SCH_RPL'] = 'Ctrl+H'
+        self[sec]['SCH_NXT'] = 'F3'
+        self[sec]['SCH_PRV'] = 'Shift+F3'
+        self[sec]['SCH_CUN'] = 'Ctrl+F3'
+        self[sec]['SCH_CUP'] = 'Ctrl+Shift+F3'
+        self[sec]['SCH_CUA'] = 'Alt+F3'
+        self[sec]['SCH_FIF'] = 'Ctrl+Shift+F'
+        self[sec]['SCH_INC'] = 'Ctrl+I'
+        self[sec]['SCH_CAS'] = 'Ctrl+F5'
+        self[sec]['SCH_REG'] = 'Ctrl+F6'
+        self[sec]['SCH_WRD'] = 'Ctrl+F7'
+        self[sec]['SCH_WRP'] = 'Ctrl+F8'
+        self[sec]['SCH_ISL'] = 'Ctrl+F9'
+        self[sec]['SCH_HLM'] = 'Ctrl+F10'
+        self[sec]['SCH_PCS'] = 'Ctrl+F11'
+        self[sec]['SCH_CXT'] = ''
+        self[sec]['SCH_BUF'] = ''
+        self[sec]['SCH_RES'] = 'Ctrl+Shift+R'
+        self[sec]['CON_OUT'] = 'Ctrl+Shift+O'
+        self[sec]['SPT_FLT'] = 'Ctrl+Alt+F'
+        self[sec]['SPT_DLF'] = 'Ctrl+Alt+Shift+F'
+        self[sec]['SPT_DOC'] = 'Alt+D'
+        self[sec]['SPT_PRJ'] = 'Alt+J'
+        self[sec]['SPT_BMK'] = 'Alt+B'
+        self[sec]['SPT_LNG'] = ''
+        self[sec]['SPT_FXP'] = 'Alt+E'
+        self[sec]['SPT_SDF'] = 'Alt+Y'
+        self[sec]['SPT_MAC'] = 'Alt+M'
+        self[sec]['SPT_TSK'] = 'Alt+T'
+        self[sec]['SPT_BPT'] = 'Alt+K'
+        self[sec]['SPT_DBG'] = 'Alt+G'
+        self[sec]['SPT_DCM'] = 'Alt+A'
+        self[sec]['SPT_CFG'] = 'Alt+F'
+        self[sec]['SPT_ENV'] = ''
+        self[sec]['SPT_HLP'] = 'Alt+H'
+        self[sec]['SPT_PLT'] = 'Alt+N'
+        self[sec]['SPT_PFL'] = ''
+        self[sec]['SPT_PYS'] = 'Alt+C'
+        self[sec]['SPT_VLT'] = 'Alt+V'
+        self[sec]['SPT_MDN'] = 'Alt+R'
+        self[sec]['SPT_CFW'] = 'Alt+W'
+        self[sec]['SPT_DIA'] = ''
+        self[sec]['SPT_SNP'] = 'Alt+I'
+        self[sec]['DOC_WRP'] = 'Ctrl+Shift+W'
+        self[sec]['DOC_EOL'] = 'Ctrl+Shift+E'
+        self[sec]['DOC_WSP'] = 'Ctrl+Shift+V'
+        self[sec]['IND_IUS'] = ''
+        self[sec]['IND_GSB'] = ''
+        self[sec]['IND_ITS'] = ''
+        self[sec]['IND_ITT'] = ''
+        self[sec]['IND_GDS'] = ''
+        self[sec]['SCL_NON'] = ''
+        self[sec]['SCL_BTH'] = ''
+        self[sec]['SCL_HOR'] = ''
+        self[sec]['SCL_VER'] = ''
+        self[sec]['AUT_SCL'] = 'Alt+Shift+A'
+        self[sec]['CRT_BRF'] = ''
+        self[sec]['CRT_LIN'] = ''
+        self[sec]['CRT_STK'] = ''
+        self[sec]['MGN_ALL'] = 'Alt+Shift+G'
+        self[sec]['MGN_NUM'] = 'Alt+Shift+N'
+        self[sec]['MGN_SYM'] = 'Alt+Shift+B'
+        self[sec]['MGN_FOL'] = 'Alt+Shift+L'
+        self[sec]['EDG_NON'] = ''
+        self[sec]['EDG_BCK'] = ''
+        self[sec]['EDG_LIN'] = ''
+        self[sec]['EDG_MUL'] = ''
+        self[sec]['EDG_COL'] = ''
+        self[sec]['EDG_CLR'] = ''
+        self[sec]['FOL_STY'] = 'Ctrl+Shift+Y'
+        self[sec]['ZOO_RST'] = 'Ctrl+\\'
+        self[sec]['ZOO_IN_'] = 'Ctrl++'
+        self[sec]['ZOO_OUT'] = 'Ctrl+-'
+        self[sec]['SRC_STA'] = ''
+        self[sec]['DOC_LCK'] = ''
+        self[sec]['WIN_TOP'] = ''
+        self[sec]['GTO_ANY'] = 'Ctrl+P'
+        self[sec]['GTO_SYM'] = 'Ctrl+R'
+        self[sec]['GTO_LIN'] = 'Ctrl+G'
+        self[sec]['JMP_BCK'] = 'Alt+-'
+        self[sec]['JMP_FWD'] = 'Alt+Shift+-'
+        self[sec]['GTO_OFL'] = 'Alt+L'
+        self[sec]['GTO_TBM'] = 'F8'
+        self[sec]['BMK_NXT'] = 'Shift+F8'
+        self[sec]['BMK_PRV'] = 'Ctrl+Shift+F8'
+        self[sec]['BMK_JB1'] = 'Ctrl+1'
+        self[sec]['BMK_JB2'] = 'Ctrl+2'
+        self[sec]['BMK_JB3'] = 'Ctrl+3'
+        self[sec]['BMK_JB4'] = 'Ctrl+4'
+        self[sec]['BMK_JB5'] = 'Ctrl+5'
+        self[sec]['BMK_JB6'] = 'Ctrl+6'
+        self[sec]['BMK_JB7'] = 'Ctrl+7'
+        self[sec]['BMK_JB8'] = 'Ctrl+8'
+        self[sec]['BMK_JB9'] = 'Ctrl+9'
+        self[sec]['BMK_JB0'] = 'Ctrl+0'
+        self[sec]['GTO_TTK'] = 'F10'
+        self[sec]['TSK_NXT'] = 'Shift+F10'
+        self[sec]['TSK_PRV'] = 'Ctrl+Shift+F10'
+        self[sec]['MCH_BRC'] = 'Ctrl+M'
+        self[sec]['RUN_MOD'] = ''
+        self[sec]['RUN_DBM'] = ''
+        self[sec]['RUN_TBP'] = 'F9'
+        self[sec]['BPT_ENA'] = 'Alt+F9'
+        self[sec]['BPT_NXT'] = 'Shift+F9'
+        self[sec]['BPT_PRV'] = 'Ctrl+Shift+F9'
+        self[sec]['PRJ_NEW'] = ''
+        self[sec]['PRJ_OPN'] = ''
+        self[sec]['PRJ_CLS'] = ''
+        self[sec]['PRJ_OPA'] = ''
+        self[sec]['PRJ_CLA'] = ''
+        self[sec]['PRJ_FIL'] = ''
+        self[sec]['PRJ_RPH'] = ''
+        self[sec]['PRJ_MFL'] = ''
+        self[sec]['FMT_TTL'] = ''
+        self[sec]['FMT_UPR'] = 'Shift+F5'
+        self[sec]['FMT_LWR'] = 'Alt+F5'
+        self[sec]['FMT_INV'] = 'F5'
+        self[sec]['FMT_PAR'] = 'Ctrl+Alt+Shift+G'
+        self[sec]['FMT_FLB'] = 'Ctrl+Alt+Shift+L'
+        self[sec]['FMT_ITP'] = 'Ctrl+Alt+Shift+M'
+        self[sec]['FMT_CMT'] = 'Ctrl+Shift+C'
+        self[sec]['FMT_ITM'] = 'Ctrl+Alt+Shift+D'
+        self[sec]['FMT_ECL'] = ''
+        self[sec]['FMT_ELF'] = ''
+        self[sec]['FMT_ECR'] = ''
+        self[sec]['FMT_EMX'] = ''
+        self[sec]['FMT_UNI'] = ''
+        self[sec]['FMT_CST'] = ''
+        self[sec]['FMT_CTS'] = ''
+        self[sec]['FMT_RMC'] = ''
+        self[sec]['FMT_RMT'] = ''
+        self[sec]['MAC_TST'] = ''
+        self[sec]['MAC_QRC'] = 'Alt+Shift+Q'
+        self[sec]['MAC_REC'] = 'Alt+Shift+R'
+        self[sec]['MAC_STP'] = 'Alt+Shift+T'
+        self[sec]['MAC_PLY'] = 'Alt+Shift+P'
+        self[sec]['MAC_PLM'] = 'Alt+Shift+M'
+        self[sec]['MAC_LOD'] = ''
+        self[sec]['MAC_SAV'] = ''
+        self[sec]['MAC_EDT'] = ''
+        self[sec]['MAC_xx1'] = ''
+        self[sec]['MAC_xx2'] = ''
+        self[sec]['MAC_xx3'] = ''
+        self[sec]['MAC_xx4'] = ''
+        self[sec]['LAY_CAP'] = ''
+        self[sec]['LAY_MBR'] = 'Ctrl+Alt+M'
+        self[sec]['LAY_TBR'] = ''
+        self[sec]['LAY_IBR'] = 'Ctrl+Alt+I'
+        self[sec]['LAY_SBR'] = ''
+        self[sec]['LAY_TTP'] = ''
+        self[sec]['LAY_MIC'] = 'Ctrl+Shift+U'
+        self[sec]['LAY_MIK'] = ''
+        self[sec]['LAY_MHT'] = 'Ctrl+Shift+H'
+        self[sec]['LAY_SCH'] = 'Alt+S'
+        self[sec]['LAY_SCS'] = 'Ctrl+Alt+S'
+        self[sec]['LAY_RLR'] = 'Alt+U'
+        self[sec]['LAY_RLS'] = 'Ctrl+Alt+U'
+        self[sec]['LAY_SPN'] = 'Alt+P'
+        self[sec]['LAY_SPS'] = 'Ctrl+Alt+P'
+        self[sec]['LAY_SPR'] = 'Ctrl+Alt+Shift+P'
+        self[sec]['LAY_CCX'] = 'Alt+O'
+        self[sec]['LAY_CCS'] = 'Ctrl+Alt+O'
+        self[sec]['LAY_PTB'] = ''
+        self[sec]['LAY_PTT'] = ''
+        self[sec]['LAY_PTI'] = ''
+        self[sec]['LAY_ACP'] = ''
+        self[sec]['LAY_CTP'] = ''
+        self[sec]['LAY_TLT'] = ''
+        self[sec]['LAY_CTT'] = ''
+        self[sec]['LAY_SPU'] = ''
+        self[sec]['LAY_FUL'] = 'F11'
+        self[sec]['LAY_DFM'] = 'Shift+F11'
+        self[sec]['LAY_PRF'] = 'F12'
+        self[sec]['LAY_MNE'] = ''
+        self[sec]['LAY_SYN'] = 'Shift+F12'
+        self[sec]['LAY_KBD'] = 'Ctrl+Shift+F12'
+        self[sec]['HLP_CON'] = 'F1'
+        self[sec]['HLP_CTX'] = 'Alt+F1'
+        self[sec]['HLP_UPD'] = ''
+        self[sec]['HLP_WIT'] = ''
+        self[sec]['HLP_ABT'] = 'Ctrl+F1'
+
+    def create(self):
+        DBG('KBD', f'{me_()}\n  File = {self.filename}\n')
+
+        # get default keyboard configuration
+        self.default()
+
+        # add blank lines and header before all sections, except the first
+        first_sec = 'Keyboard'
+        for sec in self:
+            if sec != first_sec:
+                for i in range(2):
+                    self.comments[sec].insert(i, TXT_NIL)
+            self.comments[sec].insert(2, 'Comment header for %s' % sec)
+
+        self.save()
+
+#FIX, not used: obsolete?
+    def load(self):
+        DBG('KBD', f'{me_()}\n  File = {self.filename}\n')
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        # for sec in self:
+        #     print(sec)
+        #     for key in self[sec]:
+        #         print(' ', key, self[sec][key])
+        #     print()
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+#FIX, not used: obsolete?
+    def save(self):
+        DBG('KBD', f'{me_()}\n  File = {self.filename}\n')
+
+        self.write()
