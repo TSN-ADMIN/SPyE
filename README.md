@@ -1,7 +1,7 @@
 # SPyE - [S]cintilla/[Py]thon based [E]ditor
 [comment]: <br/>
 
-<img src="./splash_wide_rgba.png)" width="" alt="GPL should be MIT...">
+<img src="./splash_wide_rgba.png)" width="" alt="SPyE logo">
 
 Yet another source code editor. Download and view the [ScreenCast](https://github.com/TSN-ADMIN/SPyE/blob/master/SPyE-ScreenCast.7z) if you dare ;-)
 
