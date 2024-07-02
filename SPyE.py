@@ -10,11 +10,13 @@ Scintilla/Python based Editor
 
 # >>>>>>>>>>>>>>>> STANDARD LIBRARY imports <<<<<
 import os
+from pathlib import Path
 import sys
 
+
 # >>>>>>>>>>>>>>>> THIRD PARTY imports <<<<<<<<<<
-from pubsub import pub
-print('pubsub API version', pub.VERSION_API)
+import wx
+
 # from pubsub.utils.notification import useNotifyByWriteFile
 # useNotifyByWriteFile(sys.stdout, all=False, subscribe=True, newTopic=True)
 #    notification flags for each type of pubsub activity. The kwargs keys can be any of the following:
@@ -27,35 +29,40 @@ print('pubsub API version', pub.VERSION_API)
 #    - all:          set all of the above to the given value (True or False).
 
 
-# >>>>>>>>>>>>>>>> LOCAL imports <<<<<<<<<<<<<<<<
-from pathlib import Path
-#HACK: enable main module startup from outside its directory
+#HACK, avoid error 'wx._core.PyNoAppError: The wx.App object must be created first!'
+app = wx.App()
+
+#HACK, enable main module startup from outside its directory
 os.chdir(Path(sys.argv[0]).parent)
 
+
+# >>>>>>>>>>>>>>>> LOCAL imports <<<<<<<<<<<<<<<<
 # from exception import (
 #     SPyEException, ...
 # )
 
 from app.app import Application
-from app.frame import AppFrame
 from app.startup import startup
 from common.util import WindowIDRef_hack
-from conf.debug import DEBUG, dbg_APP_INFO, dbg_TIMER
-from const.app import APP
+from conf.debug import dbf
 from const import glb
 
-#HACK: avoid "DeprecationWarning: an integer is required (got type WindowIDRef)."
+#HACK, avoid "DeprecationWarning: an integer is required (got type WindowIDRef)."
 WindowIDRef_hack()
 
 
 def main():
-    # startup
-    dbg_APP_INFO()
+    # init
+    startup()
+
+    dbf.APP_INFO()
+
+    dbf.SCINTILLA_CMDS()
 
     # create application
     sec = glb.CFG['General']
-    app = Application(AppFrame, APP,
-                      redirect=sec['AppRedirectOutput'],
+
+    app = Application(redirect=sec['AppRedirectOutput'],
                       filename=sec['AppRedirectOutputFile'],
                       useBestVisual=sec['AppUseBestVisual'],
                       clearSigInt=sec['AppClearSigInt'])
@@ -63,26 +70,51 @@ def main():
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #TODO, glb.MNU -> NOT USED YET
     # # apply main menu
-    # glb.MNU.apply()
+    # glb.MNU.apply()  # menubar
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-    # process config
-    glb.CFG.apply()
+    glb.CFG.apply()  # config
+    glb.SFH.apply()  # search field history
 
-    dbg_TIMER('startup', 'STOP')
+    dbf.TIMER('startup', 'STOP')
 
     # main GUI event loop
     app.MainLoop()
-    import wx
-    wx.Exit()
 
-    dbg_TIMER('session', 'STOP')
+#@@@@@@@@@@@@@@
+    # wx.Exit()
+#@@@@@@@@@@@@@@
+
+    dbf.TIMER('session', 'STOP')
 
     # exit
-    dbg_APP_INFO('EXIT', version=False, verbose=False)
+    dbf.APP_INFO('STOP', version=False, verbose=False)
 
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# import tracemalloc
+
+# tracemalloc.start(25)
+
+# ... run your application ...
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 if __name__ == '__main__':
+    main()
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# snapshot = tracemalloc.take_snapshot()
+# top_stats = snapshot.statistics('lineno')
+
+# print("[ Top 10 ]")
+# for stat in top_stats[:10]:
+#     print(stat)
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # def audit(event, args):
     #     # if event == 'open':
@@ -91,34 +123,20 @@ if __name__ == '__main__':
     # sys.addaudithook(audit)
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     # sys.stdout = sys.stderr = open('NUL', 'w')
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #TODO, add KBD, ICO for keyboard shortcuts/mni icons
 #FIX, use var DBG in 'startup'; then copy to var DEBUG
-    DBG, CFG, LNG, MNU, PLG, RFH, SFH, SSN, THM = startup()  # DBG, PLG not used
-#@@@@@@@@@@@@@@@@@@
-    glb.CFG = CFG
-    glb.RFH = RFH
-    glb.SFH = SFH
-    glb.SSN = SSN
-#@@@@@@@@@@@@@@@@@@
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-#TODO, glb.MNU -> NOT USED YET
-    # glb.MNU = MNU
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-    # glb.CFG, glb.DBG, glb.LNG, glb.PLG, glb.THM = startup()  # DBG, PLG not used
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    # from pprint import pprint
-    # pprint(DBG)
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# #NOTE, EXPERIMENTAL CODE: profiler, PERFORMANCE TESTING
+# #NOTE, EXPERIMENTAL: profiler, PERFORMANCE TESTING
 #     import cProfile, pstats, io
 #     from pstats import SortKey
 #     pr = cProfile.Profile()
@@ -139,7 +157,3 @@ if __name__ == '__main__':
 #     # import cProfile
 #     # cProfile.run('main()', filename='SPyE.profile', sort=-1)
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-#@@@@@@@@@@@
-    main()
-#@@@@@@@@@@@
